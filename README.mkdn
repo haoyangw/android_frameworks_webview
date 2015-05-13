@@ -1,0 +1,36 @@
+Google's prebuilt WebView
+=========================
+
+What's this, dawg?
+------------------
+This repository replaces android_framework_webview to use Google's prebuilt WebView.
+
+You can update the included webview binaries yourself by using chromium/prebuilt/extract.sh.
+
+Current version included in this repository is noted at chromium/prebuilt/VERSION.
+
+You must set those on build/target/product/core_minimal.mk to use this repository:
+```
+PRODUCT_PACKAGES += \
+    libwebviewchromium_plat_support \
+    libwebviewchromium_loader
+```
+You also must set config_webViewPackageName to com.google.android.webview on frameworks/base/core/res/res/values/config.xml.
+
+Pros
+----
+```
+ - Reduces full ROM build time about 40~50%.
+ - Forces users to have the latest WebView library(much higher than AOSP version).
+ - Users with Google Play loged-in, will automatically receive WebView updates provided directly by Google.
+ - Uses CTS passed Google's WebView library(no funny, funky bugs).
+```
+
+Cons
+----
+```
+ - We're now forced to use Google's prebuilt library, no local changes allowed.
+   (But realistically who mods libwebviewchromium?)
+ - Support is limited to arm/arm64 only for now.
+   (Blame Google.)
+```

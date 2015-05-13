@@ -19,6 +19,27 @@
 LOCAL_PATH := $(call my-dir)
 CHROMIUM_PATH := external/chromium_org
 
+# Prebuilt com.google.android.webview apk
+include $(CLEAR_VARS)
+
+LOCAL_MODULE := webview
+LOCAL_SRC_FILES := prebuilt/webview.apk
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE_SUFFIX := $(COMMON_ANDROID_PACKAGE_SUFFIX)
+LOCAL_MODULE_CLASS := APPS
+LOCAL_CERTIFICATE := platform
+
+include $(BUILD_PREBUILT)
+
+ifeq ($(TARGET_IS_64_BIT),true)
+TARGET_ARCH_ABI := arm64-v8a
+else
+TARGET_ARCH_ABI := armeabi-v7a
+endif
+
+$(shell mkdir -p $(TARGET_OUT_SHARED_LIBRARIES))
+$(shell cp $(LOCAL_PATH)/prebuilt/$(TARGET_ARCH_ABI)/libwebviewchromium.so $(TARGET_OUT_SHARED_LIBRARIES))
+
 # Native support library (libwebviewchromium_plat_support.so) - does NOT link
 # any native chromium code.
 include $(CLEAR_VARS)
