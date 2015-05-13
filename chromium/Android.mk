@@ -29,8 +29,6 @@ LOCAL_MODULE_SUFFIX := $(COMMON_ANDROID_PACKAGE_SUFFIX)
 LOCAL_MODULE_CLASS := APPS
 LOCAL_CERTIFICATE := platform
 
-include $(BUILD_PREBUILT)
-
 ifeq ($(TARGET_IS_64_BIT),true)
 TARGET_ARCH_ABI := arm64-v8a
 else
@@ -39,6 +37,10 @@ endif
 
 $(shell mkdir -p $(TARGET_OUT_SHARED_LIBRARIES))
 $(shell cp $(LOCAL_PATH)/prebuilt/$(TARGET_ARCH_ABI)/libwebviewchromium.so $(TARGET_OUT_SHARED_LIBRARIES))
+
+LOCAL_JNI_SHARED_LIBRARIES := prebuilt/$(TARGET_ARCH_ABI)/libwebviewchromium
+
+include $(BUILD_PREBUILT)
 
 # Native support library (libwebviewchromium_plat_support.so) - does NOT link
 # any native chromium code.
