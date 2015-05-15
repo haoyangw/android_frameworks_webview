@@ -38,8 +38,6 @@ endif
 $(shell mkdir -p $(TARGET_OUT_SHARED_LIBRARIES))
 $(shell cp $(LOCAL_PATH)/prebuilt/$(TARGET_ARCH_ABI)/libwebviewchromium.so $(TARGET_OUT_SHARED_LIBRARIES))
 
-LOCAL_JNI_SHARED_LIBRARIES := prebuilt/$(TARGET_ARCH_ABI)/libwebviewchromium
-
 include $(BUILD_PREBUILT)
 
 # Native support library (libwebviewchromium_plat_support.so) - does NOT link
