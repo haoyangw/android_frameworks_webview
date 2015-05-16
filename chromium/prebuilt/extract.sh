@@ -18,9 +18,16 @@ if [[ $NEWWEBVIEWVERSION != $WEBVIEWVERSION ]]; then
 	echo $NEWWEBVIEWVERSION > VERSION
 	rm -rf arm*
 	mv $WEBVIEWDIR/lib/* .
-	rm -rf $WEBVIEWDIR/lib
-	apktool b -c $WEBVIEWDIR
-	mv $WEBVIEWDIR/dist/*.apk webview.apk
+	rm webview.apk
+	rm -rf $WEBVIEWDIR
+	7z x -otmp "$@" 1>/dev/null
+	cd tmp
+	rm -rf lib
+	7z a -tzip -mx0 ../tmp.zip . 1>/dev/null
+	cd ..
+	rm -rf tmp
+	zipalign -v 4 tmp.zip webview.apk 1>/dev/null
+	rm tmp.zip
 else
 	echo "Input WebView apk is the same version as before."
 	echo "Not updating ..."
