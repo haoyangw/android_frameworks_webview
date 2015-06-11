@@ -28,6 +28,7 @@ if [[ $NEWWEBVIEWVERSION != $WEBVIEWVERSION ]]; then
 	rm -rf tmp
 	zipalign -v 4 tmp.zip webview.apk 1>/dev/null
 	rm tmp.zip
+	rm -rf webview
 else
 	echo "Input WebView apk is the same version as before."
 	echo "Not updating ..."
