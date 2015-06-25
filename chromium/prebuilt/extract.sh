@@ -23,7 +23,7 @@ if [[ $NEWWEBVIEWVERSION != $WEBVIEWVERSION ]]; then
 	7z x -otmp "$@" 1>/dev/null
 	cd tmp
 	rm -rf lib
-	find . -name '*.png' -print0 | xargs -0 -P8 -L1 pngquant --ext .png --force --speed 1 -v
+	find . -name '*.png' -print0 | xargs -0 -P8 -L1 pngquant --ext .png --force --speed 1
 	7z a -tzip -mx0 ../tmp.zip . 1>/dev/null
 	cd ..
 	rm -rf tmp
