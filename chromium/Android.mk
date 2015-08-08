@@ -33,6 +33,10 @@ ifeq ($(TARGET_IS_64_BIT),true)
 TARGET_ARCH_ABI := arm64-v8a
 TARGET_LIB_DIR := lib64
 TARGET_LIB_ARM_DIR := arm64
+else ifeq ($(TARGET_ARCH),x86)
+TARGET_ARCH_ABI := x86
+TARGET_LIB_DIR := lib
+TARGET_LIB_ARM_DIR := x86
 else
 TARGET_ARCH_ABI := armeabi-v7a
 TARGET_LIB_DIR := lib
