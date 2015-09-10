@@ -6,9 +6,9 @@
 # http://www.apkmirror.com/apk/google-inc/android-system-webview/
 
 if [ $# > 1 ]; then
-if [ "$2" ="x86" ]; then 
+if [ "$2" = "x86" ]; then 
 APK=webview-x86.apk
-else
+elif [ "$2" != "" ]; then 
 echo "Error! Unknown architecture given"
 exit 1
 fi
@@ -21,7 +21,7 @@ if ! apktool d -f -s "$1" 1>/dev/null; then
 	echo "Failed to extract with apktool!"
 	exit 1
 fi
-WEBVIEWDIR=$(\ls -d com.google.android.webview* || (echo "Input file is not a WebView apk!" ; exit 1))
+WEBVIEWDIR=$(\ls -d com.google.android.webview*/ || (echo "Input file is not a WebView apk!" ; exit 1))
 
 NEWWEBVIEWVERSION=$(cat $WEBVIEWDIR/apktool.yml | grep versionName | awk '{print $2}')
 if [[ $NEWWEBVIEWVERSION != $WEBVIEWVERSION ]]; then
@@ -29,16 +29,16 @@ if [[ $NEWWEBVIEWVERSION != $WEBVIEWVERSION ]]; then
 	echo $NEWWEBVIEWVERSION > VERSION
 	rm -rf arm*
 	mv $WEBVIEWDIR/lib/* .
-	rm $APK
+	rm "$APK"
 	rm -rf $WEBVIEWDIR
-	7z x -otmp "$@" 1>/dev/null
+	7z x -otmp "$1" 1>/dev/null
 	cd tmp
 	rm -rf lib
 	find . -name '*.png' -print0 | xargs -0 -P8 -L1 pngquant --ext .png --force --speed 1
 	7z a -tzip -mx0 ../tmp.zip . 1>/dev/null
 	cd ..
 	rm -rf tmp
-	zipalign -v 4 tmp.zip $APK 1>/dev/null
+	zipalign -v 4 tmp.zip "$APK" 1>/dev/null
 	rm tmp.zip
 	rm -rf webview
 else
