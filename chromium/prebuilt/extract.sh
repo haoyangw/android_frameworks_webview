@@ -5,22 +5,22 @@
 #
 # http://www.apkmirror.com/apk/google-inc/android-system-webview/
 
-if [ $# > 1 ]; then
-if [ "$2" = "x86" ]; then 
-echo "Updating webview for x86"
-APK=webview-x86.apk
-elif [ "$2" = "" ]; then 
-echo "Updating webview for arm/arm64"
-APK=webview.apk
-elif [ "$2" != "" ]; then 
-echo "Error! Unknown architecture given"
-exit 1
+if [ $# -eq 0 ]; then
+	echo "Error! No arguments given! Read syntax!"
+	echo "Usage for x86 apk: ./extract.sh /path/to/com.google.android.webview.apk x86"
+	echo "Usage for arm/arm64 apk: ./extract.sh /path/to/com.google.android.webview.apk"
+	exit 1
 fi
-else
-echo "Error! No arguments given! Read syntax!"
-echo "Usage for x86 apk: ./extract.sh /path/to/com.google.android.webview.apk x86"
-echo "Usage for arm/arm64 apk: ./extract.sh /path/to/com.google.android.webview.apk"
-exit 1
+
+if [ "$2" = "x86" ]; then 
+	echo "Updating webview for x86"
+	APK=webview-x86.apk
+elif [ "$2" = "" ]; then 
+	echo "Updating webview for arm/arm64"
+	APK=webview.apk
+elif [ "$2" != "" ]; then 
+	echo "Error! Unknown architecture given"
+	exit 1
 fi
 
 WEBVIEWVERSION=$(cat VERSION)
