@@ -24,17 +24,13 @@ exit 1
 fi
 
 WEBVIEWVERSION=$(cat VERSION)
-touch 2
 if ! apktool d -f -s $1 1>/dev/null; then
 	echo "Failed to extract with apktool!"
 	exit 1
 fi
-touch 5
 WEBVIEWDIR=$(\ls -d com.google.android.webview*/ || (echo "Input file is not a WebView apk!" ; exit 1))
-touch 3
 
 NEWWEBVIEWVERSION=$(cat $WEBVIEWDIR/apktool.yml | grep versionName | awk '{print $2}')
-touch 4
 if [[ $NEWWEBVIEWVERSION != $WEBVIEWVERSION ]]; then
 	echo "Updating current WebView $WEBVIEWVERSION to $NEWWEBVIEWVERSION ..."
 	echo $NEWWEBVIEWVERSION > VERSION
