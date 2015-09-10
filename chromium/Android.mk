@@ -23,7 +23,11 @@ CHROMIUM_PATH := external/chromium_org
 include $(CLEAR_VARS)
 
 LOCAL_MODULE := webview
+ifeq ($(TARGET_ARCH),x86)
+LOCAL_SRC_FILES := prebuilt/webview-x86.apk
+else
 LOCAL_SRC_FILES := prebuilt/webview.apk
+endif
 LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE_SUFFIX := $(COMMON_ANDROID_PACKAGE_SUFFIX)
 LOCAL_MODULE_CLASS := APPS
