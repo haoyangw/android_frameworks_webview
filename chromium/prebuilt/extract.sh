@@ -5,8 +5,19 @@
 #
 # http://www.apkmirror.com/apk/google-inc/android-system-webview/
 
+if [ $# > 1 ]; then
+if [ "$2" ="x86" ]; then 
+APK=webview-x86.apk
+else
+echo "Error! Unknown architecture given"
+exit 1
+fi
+else
+APK=webview.apk
+fi
+
 WEBVIEWVERSION=$(cat VERSION)
-if ! apktool d -f -s "$@" 1>/dev/null; then
+if ! apktool d -f -s "$1" 1>/dev/null; then
 	echo "Failed to extract with apktool!"
 	exit 1
 fi
@@ -18,7 +29,7 @@ if [[ $NEWWEBVIEWVERSION != $WEBVIEWVERSION ]]; then
 	echo $NEWWEBVIEWVERSION > VERSION
 	rm -rf arm*
 	mv $WEBVIEWDIR/lib/* .
-	rm webview.apk
+	rm $APK
 	rm -rf $WEBVIEWDIR
 	7z x -otmp "$@" 1>/dev/null
 	cd tmp
@@ -27,7 +38,7 @@ if [[ $NEWWEBVIEWVERSION != $WEBVIEWVERSION ]]; then
 	7z a -tzip -mx0 ../tmp.zip . 1>/dev/null
 	cd ..
 	rm -rf tmp
-	zipalign -v 4 tmp.zip webview.apk 1>/dev/null
+	zipalign -v 4 tmp.zip $APK 1>/dev/null
 	rm tmp.zip
 	rm -rf webview
 else
